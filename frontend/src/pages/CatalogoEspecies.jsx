@@ -137,6 +137,12 @@ export default function CatalogoEspecies() {
 
 
     // ── Helpers ──────────────────────────────────────────────────────────────
+    const stripHtml = (html) => {
+        if (!html) return '';
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || '';
+    };
+
     const obtenerClaseBadge = (tipo) => {
         switch (tipo) {
             case 'Anida': return 'catalogo-badge-anida';
@@ -198,7 +204,7 @@ export default function CatalogoEspecies() {
                     <h3 className="catalogo-tarjeta-titulo">{especie.nombre}</h3>
                     <p className="catalogo-tarjeta-cientifico">{especie.nombreCientifico}</p>
                     <hr className={`catalogo-tarjeta-linea ${obtenerClaseLinea(especie.tipo)}`} />
-                    <p className="catalogo-tarjeta-descripcion">{especie.descripcion}</p>
+                    <p className="catalogo-tarjeta-descripcion">{stripHtml(especie.descripcion)}</p>
                 </div>
             </article>
         );
