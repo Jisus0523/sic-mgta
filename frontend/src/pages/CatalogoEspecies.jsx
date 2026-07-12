@@ -140,7 +140,7 @@ export default function CatalogoEspecies() {
     const stripHtml = (html) => {
         if (!html) return '';
         const doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent || '';
+        return (doc.body.textContent || '').replace(/\u00A0/g, ' ').trim();
     };
 
     const obtenerClaseBadge = (tipo) => {
