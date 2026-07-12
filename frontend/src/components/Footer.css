@@ -1,0 +1,18 @@
+/*Componente footer*/
+.footer-contenedor {
+  background-color: var(--color-oceano);
+  color: rgba(255, 249, 249, 0.926);
+  /* --color-arena al 70% de opacidad */
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+
+  /* Utilidad para asegurar que el footer se mantenga abajo si el main es corto */
+  margin-top: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*Fin del componente footer*/

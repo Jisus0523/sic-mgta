@@ -1,0 +1,880 @@
+/*Pagina Admin*/
+/* ==========================================================================
+   Panel de Administración - Tema Claro (Flat Design Premium)
+   ========================================================================== */
+
+:root {
+  --admin-bg-principal: #F1F5F9;
+  /* Fondo de la página */
+  --admin-bg-tarjeta: #FFFFFF;
+  --admin-bg-tarjeta-hover: #F8FAFC;
+  --admin-border: #E2E8F0;
+  --admin-border-hover: #CBD5E1;
+  --admin-text-principal: #0F172A;
+  --admin-text-secundario: #64748B;
+  --admin-acento: #0284C7;
+  /* Azul más oscuro para buen contraste */
+  --admin-acento-hover: #0369A1;
+  --admin-verde: #059669;
+  /* Verde esmeralda con buen contraste */
+  --admin-ambar: #D97706;
+  /* Ámbar oscuro */
+  --admin-rojo: #DC2626;
+  /* Rojo oscuro */
+  --admin-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --admin-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+/* Solución para que los Tooltips de Recharts no queden detrás de las leyendas */
+.recharts-tooltip-wrapper {
+  z-index: 9999 !important;
+}
+
+.admin-dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #e0f2fe2b;
+  padding-bottom: 4rem;
+  color: var(--admin-text-principal);
+}
+
+/* Animaciones */
+@keyframes adminFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.admin-dashboard-animacion-paso {
+  animation: adminFadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Contenedor Principal */
+.admin-dashboard-modulo-contenedor {
+  padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.admin-dashboard-titulo-modulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--admin-text-principal);
+  margin-bottom: 2rem;
+  letter-spacing: -0.5px;
+}
+
+/* ==========================================================================
+   Tarjetas (Cards)
+   ========================================================================== */
+.admin-dashboard-tarjeta {
+  background: var(--admin-bg-tarjeta);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--admin-shadow);
+  margin-bottom: 1.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-dashboard-tarjeta:hover {
+  border-color: var(--admin-border-hover);
+  box-shadow: var(--admin-shadow-hover);
+}
+
+/* ==========================================================================
+   Dashboard Hub (Vista Mapa Expandida)
+   ========================================================================== */
+.admin-dashboard-hub-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Fila Superior: KPIs */
+.admin-dashboard-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.admin-dashboard-kpi-card {
+  background: var(--admin-bg-tarjeta);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-dashboard-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--admin-acento);
+  border-radius: 6px 0 0 6px;
+}
+
+.admin-dashboard-kpi-card.critico::before {
+  background: var(--admin-rojo);
+}
+
+.admin-dashboard-kpi-card.activo::before {
+  background: var(--admin-verde);
+}
+
+.admin-dashboard-kpi-valor {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--admin-text-principal);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.admin-dashboard-kpi-etiqueta {
+  color: var(--admin-text-secundario);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Fila Inferior: Mapa + Timeline */
+.admin-dashboard-split-view {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  height: 600px;
+}
+
+.admin-dashboard-map-container {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  box-shadow: var(--admin-shadow);
+  position: relative;
+  background-color: #E2E8F0;
+  /* Fondo por si falla el mapa */
+}
+
+.admin-dashboard-timeline {
+  background: var(--admin-bg-tarjeta);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  padding: 2rem;
+  overflow-y: auto;
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-dashboard-timeline::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-dashboard-timeline::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+}
+
+.admin-dashboard-timeline h3 {
+  color: var(--admin-text-principal);
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.admin-timeline-item {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 1.5rem;
+  border-left: 2px solid #E2E8F0;
+}
+
+.admin-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background: var(--admin-acento);
+  border-radius: 50%;
+}
+
+.admin-timeline-time {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--admin-text-secundario);
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+
+.admin-timeline-text {
+  font-size: 0.95rem;
+  color: var(--admin-text-principal);
+}
+
+
+/* ==========================================================================
+   Tablas Estilo Tarjeta (Card Tables)
+   ========================================================================== */
+.admin-dashboard-busqueda-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8rem 1.5rem;
+  border: 2px solid var(--admin-border);
+  border-radius: 100px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  color: var(--admin-text-principal);
+  background-color: var(--admin-bg-tarjeta);
+  transition: all 0.2s ease;
+  margin-bottom: 1.5rem;
+}
+
+.admin-dashboard-busqueda-input:focus {
+  outline: none;
+  border-color: var(--admin-acento);
+}
+
+.admin-dashboard-tabla-wrapper {
+  overflow-x: auto;
+}
+
+.admin-dashboard-tabla {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.8rem;
+  text-align: left;
+  min-width: 800px;
+}
+
+.admin-dashboard-tabla th {
+  color: var(--admin-text-secundario);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  padding: 0 1.5rem;
+  border: none;
+}
+
+.admin-dashboard-tabla tbody tr {
+  background: var(--admin-bg-tarjeta);
+  box-shadow: var(--admin-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border-radius: 12px;
+}
+
+.admin-dashboard-tabla tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-hover);
+  background-color: var(--admin-bg-tarjeta-hover);
+}
+
+.admin-dashboard-tabla td {
+  padding: 1.2rem 1.5rem;
+  border-top: 1px solid var(--admin-border);
+  border-bottom: 1px solid var(--admin-border);
+  color: var(--admin-text-principal);
+  font-size: 0.95rem;
+}
+
+.admin-dashboard-tabla td:first-child {
+  border-left: 1px solid var(--admin-border);
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.admin-dashboard-tabla td:last-child {
+  border-right: 1px solid var(--admin-border);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Badges / Status Pills */
+.admin-dashboard-badge {
+  padding: 0.35rem 0.8rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.badge-pendiente {
+  background: #FEF3C7;
+  color: var(--admin-ambar);
+}
+
+.badge-proceso {
+  background: #E0F2FE;
+  color: var(--admin-acento);
+}
+
+.badge-resuelto {
+  background: #D1FAE5;
+  color: var(--admin-verde);
+}
+
+.badge-rechazado {
+  background: #FEE2E2;
+  color: var(--admin-rojo);
+}
+
+/* ==========================================================================
+   Drawers (Paneles Laterales)
+   ========================================================================== */
+.admin-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.4);
+  /* Overlay oscuro sólido, sin glass */
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-drawer-content {
+  width: 100%;
+  max-width: 500px;
+  background: var(--admin-bg-principal);
+  border-left: 1px solid var(--admin-border);
+  height: 100%;
+  padding: 2rem;
+  overflow-y: auto;
+  box-shadow: -10px 0 25px rgba(0, 0, 0, 0.1);
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  position: relative;
+}
+
+.admin-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.admin-drawer-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--admin-text-principal);
+  margin: 0;
+}
+
+.admin-drawer-close {
+  background: transparent;
+  border: none;
+  color: var(--admin-text-secundario);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.admin-drawer-close:hover {
+  color: var(--admin-rojo);
+}
+
+.admin-drawer-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.admin-drawer-item {
+  background: var(--admin-bg-tarjeta);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--admin-border);
+  box-shadow: var(--admin-shadow);
+}
+
+.admin-drawer-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--admin-text-secundario);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.admin-drawer-value {
+  font-size: 1rem;
+  color: var(--admin-text-principal);
+  font-weight: 500;
+}
+
+.admin-drawer-img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--admin-border);
+  margin-top: 1rem;
+  background: #E2E8F0;
+}
+
+/* ==========================================================================
+   Formularios
+   ========================================================================== */
+.admin-form-input {
+  width: 100%;
+  background: var(--admin-bg-tarjeta);
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: var(--admin-text-principal);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.admin-form-input:focus {
+  outline: none;
+  border-color: var(--admin-acento);
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+}
+
+.admin-form-input option {
+  background: #FFFFFF;
+  color: #0F172A;
+}
+
+/* ==========================================================================
+   Botones
+   ========================================================================== */
+.admin-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.admin-btn-primary {
+  background: var(--admin-acento);
+  color: #FFFFFF;
+}
+
+.admin-btn-primary:hover {
+  background: var(--admin-acento-hover);
+  transform: translateY(-1px);
+}
+
+.admin-btn-success {
+  background: var(--admin-verde);
+  color: #FFFFFF;
+}
+
+.admin-btn-success:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+.admin-btn-danger {
+  background: var(--admin-rojo);
+  color: #FFFFFF;
+}
+
+.admin-btn-danger:hover {
+  background: #B91C1C;
+  transform: translateY(-1px);
+}
+
+.admin-btn-outline {
+  background: var(--admin-bg-tarjeta);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-principal);
+}
+
+.admin-btn-outline:hover {
+  background: var(--admin-bg-tarjeta-hover);
+  border-color: var(--admin-border-hover);
+}
+
+/* Recharts Tooltips (estilo claro) */
+.recharts-default-tooltip {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  color: #0F172A !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Botones Icono Minimalistas */
+.admin-btn-icon-only {
+  background: transparent;
+  color: var(--admin-text-secundario);
+  border: none;
+  padding: 0.4rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-btn-icon-only:hover {
+  background: #F1F5F9;
+  color: var(--admin-text-principal);
+  transform: scale(1.05);
+}
+
+.admin-btn-icon-only.action-primary:hover {
+  color: var(--admin-acento);
+  background: #E0F2FE;
+}
+
+.admin-btn-icon-only.action-success:hover {
+  color: var(--admin-verde);
+  background: #D1FAE5;
+}
+
+.admin-btn-icon-only.action-danger:hover {
+  color: var(--admin-rojo);
+  background: #FEE2E2;
+}
+
+@media (max-width: 900px) {
+  .admin-dashboard-split-view {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .admin-dashboard-map-container {
+    height: 400px;
+  }
+
+  .admin-dashboard-timeline {
+    height: 400px;
+  }
+}
+
+/* ==========================================================================
+   Split Screen Modal (Noticias)
+   ========================================================================== */
+.admin-split-modal-overlay {
+  padding: 2rem;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-split-modal-content {
+  background: #ffffff;
+  width: 100%;
+  max-width: 1200px;
+  height: 85vh;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0,0,0,0.05);
+  animation: adminFadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-split-modal-content .admin-drawer-header {
+  padding: 1.5rem 2.5rem;
+  margin: 0;
+  border-bottom: 1px solid var(--admin-border);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.admin-split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-grow: 1;
+  overflow: hidden;
+  background: var(--admin-bg-fondo);
+}
+
+.admin-split-form {
+  padding: 2.5rem;
+  overflow-y: auto;
+  background: #ffffff;
+  border-right: 1px solid var(--admin-border);
+  /* Custom scrollbar for form */
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 transparent;
+}
+
+.admin-split-form::-webkit-scrollbar {
+  width: 6px;
+}
+.admin-split-form::-webkit-scrollbar-thumb {
+  background-color: #CBD5E1;
+  border-radius: 10px;
+}
+
+.admin-split-preview {
+  padding: 3rem 2.5rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.admin-preview-title {
+  font-size: 1.1rem;
+  color: var(--admin-text-secundario);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  align-self: flex-start;
+  width: 100%;
+  border-bottom: 2px dashed #CBD5E1;
+  padding-bottom: 1rem;
+}
+
+.admin-preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  perspective: 1000px;
+}
+
+.admin-live-card {
+  width: 100%;
+  max-width: 420px;
+  pointer-events: none;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.admin-split-preview:hover .admin-live-card {
+  transform: translateY(-5px) rotateX(2deg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.admin-file-upload-wrapper {
+  border: 2px dashed #94A3B8;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  background: #F8FAFC;
+  margin-bottom: 0.8rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-file-upload-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--admin-acento);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.admin-file-upload-wrapper:hover {
+  border-color: var(--admin-acento);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -10px rgba(2, 132, 199, 0.2);
+}
+
+.admin-file-upload-wrapper:hover::before {
+  opacity: 0.03;
+}
+
+.admin-file-upload-wrapper input[type="file"] {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Noticias Cards (Novedades y Acciones)
+   ========================================================================== */
+.admin-noticia-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  position: relative;
+}
+
+.admin-noticia-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-noticia-card-img-wrapper {
+  height: 200px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-noticia-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.admin-noticia-card:hover .admin-noticia-card-img {
+  transform: scale(1.05);
+}
+
+.admin-noticia-card-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  color: #94A3B8;
+}
+
+.admin-noticia-card-badge-container {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+}
+
+.admin-noticia-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.admin-noticia-card-title {
+  margin: 0 0 0.8rem 0;
+  color: #0F172A;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.admin-noticia-card-date {
+  margin: 0 0 1.5rem 0;
+  color: #64748B;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.admin-noticia-card-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+  border-top: 1px solid #F1F5F9;
+  padding-top: 1.2rem;
+}
+
+.admin-noticia-btn-edit {
+  background: #F8FAFC;
+  color: #0F172A;
+  border: 1px solid #E2E8F0;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.admin-noticia-btn-edit:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.admin-noticia-btn-delete {
+  background: transparent;
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.admin-noticia-btn-delete:hover {
+  background: #FEF2F2;
+  border-color: #EF4444;
+}
+
+@media (max-width: 1024px) {
+  .admin-split-modal-overlay {
+    padding: 1rem;
+  }
+  .admin-split-layout {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+  .admin-split-form {
+    border-right: none;
+    border-bottom: 1px solid var(--admin-border);
+    overflow-y: visible;
+  }
+  .admin-split-preview {
+    overflow-y: visible;
+  }
+}

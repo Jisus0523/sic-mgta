@@ -1,0 +1,156 @@
+/* Estilos minimalistas para react-datepicker basados en el diseño solicitado */
+@import 'react-datepicker/dist/react-datepicker.css';
+
+/* Contenedor principal del calendario */
+.react-datepicker {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+  padding: 10px;
+  display: inline-block;
+}
+
+/* Popper container (Asegura que siempre se superponga) */
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}
+
+/* Triangulito superior (opcional, podemos ocultarlo para más minimalismo) */
+.react-datepicker__triangle {
+  display: none !important;
+}
+
+/* Cabecera (Mes y flechas) */
+.react-datepicker__header {
+  background-color: transparent !important;
+  border-bottom: none !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* Título de mes actual */
+.react-datepicker__current-month {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+
+/* Días de la semana (Mo, Tu, We...) */
+.react-datepicker__day-names {
+  margin-top: 5px;
+}
+.react-datepicker__day-name {
+  color: #6b7280;
+  font-weight: 500;
+  font-size: 0.85rem;
+  width: 2.2rem;
+  line-height: 2.2rem;
+  margin: 0.15rem;
+}
+
+/* Flechas de navegación */
+.react-datepicker__navigation {
+  top: 18px;
+}
+.react-datepicker__navigation-icon::before {
+  border-color: #1a1a1a !important;
+  border-width: 2px 2px 0 0 !important;
+  width: 8px !important;
+  height: 8px !important;
+}
+.react-datepicker__navigation:hover *::before {
+  border-color: var(--color-ola, #0284C7) !important;
+}
+
+/* Días del mes */
+.react-datepicker__month {
+  margin: 0;
+}
+.react-datepicker__day {
+  width: 2.2rem;
+  line-height: 2.2rem;
+  margin: 0.15rem;
+  border-radius: 8px !important;
+  color: #1a1a1a;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.react-datepicker__day:hover {
+  background-color: #f3f4f6 !important;
+  color: #1a1a1a;
+}
+
+/* Día seleccionado */
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--color-ola, #0284C7) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+}
+
+/* Día actual (Hoy) */
+.react-datepicker__day--today {
+  font-weight: 700;
+  color: var(--color-ola, #0284C7);
+  background-color: #f0f9ff;
+}
+
+/* Días fuera del mes */
+.react-datepicker__day--outside-month {
+  color: #d1d5db !important;
+}
+
+/* Ocultar outline al seleccionar con teclado */
+.react-datepicker__day:focus {
+  outline: none;
+}
+
+/* Ajustes para el input que dispara el calendario */
+.custom-datepicker-input {
+  width: 100%;
+  font-family: inherit;
+  background-color: var(--color-blanco, #fff);
+  color: var(--color-oceano, #000);
+}
+
+/* Estilos para los dropdowns de Mes y Año */
+.react-datepicker__header__dropdown {
+  margin: 5px 0 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.react-datepicker__month-select,
+.react-datepicker__year-select {
+  background-color: #f3f4f6;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  cursor: pointer;
+  padding: 4px 8px;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.react-datepicker__month-select:hover,
+.react-datepicker__year-select:hover {
+  background-color: #e5e7eb;
+}
+
+/* Fix width in flex/grid layouts */
+.react-datepicker-wrapper {
+  width: 100%;
+  display: block;
+}

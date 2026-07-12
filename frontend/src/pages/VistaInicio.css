@@ -1,0 +1,590 @@
+/*Pagina VistaInicio*/
+/* ==========================================================================
+   Estilos de la Landing Page (VistaInicio) - Mobile First
+   ========================================================================== */
+/* ==========================================================================
+   Estilos de la Landing Page (VistaInicio) - Aisaldos con prefijo "vista-inicio-"
+   ========================================================================== */
+.vista-inicio-contenedor {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 3rem;
+    background-color: #ffffff4a;
+}
+
+/* Hero Section Inmersivo */
+.vista-inicio-hero {
+    color: var(--color-blanco);
+    padding: 5rem 1.5rem 6.5rem 1.5rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-align: center;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    box-shadow: var(--sombra-suave);
+    position: relative;
+    overflow: hidden;
+}
+
+.vista-inicio-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.4)), radial-gradient(circle at top right, rgba(2, 132, 199, 0.15), transparent 60%);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: none;
+}
+
+.vista-inicio-hero-contenido {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    /* Asegura que quede por encima del before */
+    z-index: 2;
+}
+
+.vista-inicio-insignia {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--color-espuma);
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.vista-inicio-titulo {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.vista-inicio-texto-gradiente {
+    background: linear-gradient(135deg, var(--color-acento) 0%, #FFA07A 50%, var(--color-blanco) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.vista-inicio-subtitulo {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 620px;
+    margin: 1.2rem auto 0 auto;
+    line-height: 1.7;
+}
+
+/* Sección de Tarjetas Informativas */
+.vista-inicio-info-seccion {
+    padding: 0 1.5rem;
+    margin-top: -3.5rem;
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vista-inicio-info-tarjeta {
+    background-color: var(--color-blanco);
+    border-radius: 24px;
+    padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    box-shadow: var(--sombra-tarjeta);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(15, 23, 42, 0.04);
+}
+
+.vista-inicio-info-tarjeta:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--sombra-tarjeta-hover);
+}
+
+.vista-inicio-info-icono {
+    font-size: 2rem;
+    background: var(--color-espuma);
+    color: var(--color-ola);
+    padding: 0.8rem;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.vista-inicio-info-tarjeta:hover .vista-inicio-info-icono {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.vista-inicio-info-cuerpo h3 {
+    font-size: 1.2rem;
+    color: var(--color-oceano);
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+}
+
+.vista-inicio-info-cuerpo p {
+    font-size: 0.95rem;
+    color: #475569;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Botones Minimalistas en el Hero */
+.vista-inicio-cta-minimalista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .vista-inicio-cta-minimalista {
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+}
+
+.vista-inicio-btn-mini {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid transparent;
+}
+
+@media (min-width: 768px) {
+    .vista-inicio-btn-mini {
+        width: auto;
+    }
+}
+
+.vista-inicio-btn-mini.primario {
+    background-color: var(--color-blanco);
+    color: var(--color-oceano);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.vista-inicio-btn-mini.primario:hover {
+    background-color: var(--color-espuma);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.vista-inicio-btn-mini.secundario,
+.vista-inicio-btn-mini.tercero {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-blanco);
+    border-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.vista-inicio-btn-mini.secundario:hover,
+.vista-inicio-btn-mini.tercero:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: var(--color-blanco);
+    transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   Media Queries (Tablets y Desktop)
+   ========================================================================== */
+@media (min-width: 768px) {
+    .vista-inicio-hero {
+        padding: 6.5rem 2rem 8.5rem 2rem;
+        border-bottom-left-radius: 60px;
+        border-bottom-right-radius: 60px;
+    }
+
+    .vista-inicio-titulo {
+        font-size: 4rem;
+    }
+
+    .vista-inicio-subtitulo {
+        font-size: 1.3rem;
+    }
+
+    .vista-inicio-info-seccion {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        padding: 0 2rem;
+        margin-top: -4.5rem;
+    }
+
+    .vista-inicio-info-tarjeta {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 2.5rem 2rem;
+    }
+
+    .vista-inicio-info-icono {
+        margin-bottom: 0.5rem;
+    }
+
+
+}
+
+/* ==========================================================================
+   Nueva Sección: Categorías de Reporte y Animaciones Scroll Reveal
+   ========================================================================== */
+
+/* Estilos de la Nueva Sección */
+.vista-inicio-categorias-seccion {
+    padding: 5rem 1.5rem 2rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.vista-inicio-categorias-seccion .vista-inicio-categorias-titulo {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--color-oceano);
+    margin-bottom: 0.75rem;
+}
+
+.vista-inicio-categorias-seccion .vista-inicio-categorias-subtitulo {
+    font-size: 1.05rem;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto 3.5rem auto;
+    line-height: 1.6;
+}
+
+.vista-inicio-categorias-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* Estado inicial de las tarjetas para la animación Fade-in Up */
+.vista-inicio-categoria-tarjeta {
+    background-color: var(--color-blanco);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    box-shadow: var(--sombra-tarjeta);
+    border: 1px solid rgba(15, 23, 42, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    /* Transición y estado inicial */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out, border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Estado activo cuando la sección recibe la clase .animacion-activa */
+.vista-inicio-categorias-seccion.vista-inicio-animacion-activa .vista-inicio-categoria-tarjeta {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Efecto Stagger (Retardo Escalonado) */
+.vista-inicio-categorias-seccion .vista-inicio-categoria-tarjeta:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.vista-inicio-categorias-seccion .vista-inicio-categoria-tarjeta:nth-child(2) {
+    transition-delay: 0.3s;
+}
+
+.vista-inicio-categorias-seccion .vista-inicio-categoria-tarjeta:nth-child(3) {
+    transition-delay: 0.5s;
+}
+
+/* Efecto hover interactivo: Se ilumina con el color-ola y se eleva */
+.vista-inicio-categoria-tarjeta:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08);
+    border-color: rgba(2, 132, 199, 0.2);
+}
+
+/* Reseteo del delay en Hover para interactividad instantánea */
+.vista-inicio-categorias-seccion.vista-inicio-animacion-activa .vista-inicio-categoria-tarjeta:hover {
+    transition-delay: 0s;
+}
+
+.vista-inicio-categoria-icono {
+    font-size: 2.5rem;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    transition: transform 0.4s ease;
+}
+
+/* Colorización temática de iconos de categoría */
+.vista-inicio-categoria-icono.fauna {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: var(--color-acento);
+}
+
+.vista-inicio-categoria-icono.desechos {
+    background-color: rgba(2, 132, 199, 0.1);
+    color: var(--color-ola);
+}
+
+.vista-inicio-categoria-icono.antropica {
+    background-color: #FEF3C7;
+    color: #D97706;
+}
+
+.vista-inicio-categoria-tarjeta:hover .vista-inicio-categoria-icono {
+    transform: scale(1.15) rotate(-5deg);
+    box-shadow: var(--sombra-coral-hover);
+}
+
+.vista-inicio-categoria-tarjeta h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-oceano);
+    margin-bottom: 0.75rem;
+}
+
+.vista-inicio-categoria-tarjeta p {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ==========================================================================
+   Efectos de Animación Scroll Reveal Generales
+   ========================================================================== */
+.vista-inicio-scroll-oculto {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vista-inicio-scroll-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Desktop para categorías */
+@media (min-width: 768px) {
+    .vista-inicio-categorias-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+    }
+}
+
+/* ==========================================================================
+   Nueva Sección: Impacto de la Comunidad — Rediseño Premium
+   ========================================================================== */
+.vista-inicio-impacto-seccion {
+    padding: 5rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* Fondo gradiente vibrante */
+    background: linear-gradient(135deg, #0f172a 0%, #0c4a6e 50%, #065f46 100%);
+}
+
+/* Burbuja decorativa de fondo */
+.vista-inicio-impacto-seccion::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(2,132,199,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.vista-inicio-impacto-seccion::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Sobreescribir el texto del título para que sea blanco en esta sección */
+.vista-inicio-impacto-seccion .vista-inicio-categorias-titulo {
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+.vista-inicio-impacto-seccion .vista-inicio-categorias-subtitulo {
+    color: rgba(255,255,255,0.75);
+}
+
+.vista-inicio-impacto-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 3rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .vista-inicio-impacto-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+.vista-inicio-impacto-card {
+    border-radius: 20px;
+    padding: 2.2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Icono decorativo de fondo */
+.vista-inicio-impacto-card::after {
+    content: attr(data-icon);
+    position: absolute;
+    bottom: -8px;
+    right: 6px;
+    font-size: 4.5rem;
+    opacity: 0.12;
+    pointer-events: none;
+    line-height: 1;
+}
+
+/* Color único por tarjeta — tonos claros y frescos */
+.vista-inicio-impacto-card.total {
+    background: rgba(219, 234, 254, 0.95); /* azul muy claro */
+    box-shadow: 0 8px 32px rgba(2,132,199,0.2);
+    border: 1px solid rgba(147,197,253,0.6);
+}
+
+.vista-inicio-impacto-card.resueltos {
+    background: rgba(209, 250, 229, 0.95); /* verde menta claro */
+    box-shadow: 0 8px 32px rgba(16,185,129,0.2);
+    border: 1px solid rgba(110,231,183,0.6);
+}
+
+.vista-inicio-impacto-card.fauna {
+    background: rgba(254, 243, 199, 0.95); /* amarillo suave */
+    box-shadow: 0 8px 32px rgba(245,158,11,0.2);
+    border: 1px solid rgba(252,211,77,0.6);
+}
+
+.vista-inicio-impacto-card.desechos {
+    background: rgba(254, 226, 226, 0.95); /* rojo rosado suave */
+    box-shadow: 0 8px 32px rgba(239,68,68,0.2);
+    border: 1px solid rgba(252,165,165,0.6);
+}
+
+.vista-inicio-impacto-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    filter: brightness(1.1);
+}
+
+.vista-inicio-impacto-valor {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.8rem;
+    font-weight: 800;
+    line-height: 1;
+    background: none;
+    -webkit-text-fill-color: unset;
+}
+
+/* Colores de número por tarjeta */
+.vista-inicio-impacto-card.total .vista-inicio-impacto-valor {
+    color: #0284c7;
+}
+.vista-inicio-impacto-card.resueltos .vista-inicio-impacto-valor {
+    color: #059669;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: #059669;
+}
+.vista-inicio-impacto-card.fauna .vista-inicio-impacto-valor {
+    color: #d97706;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: #d97706;
+}
+.vista-inicio-impacto-card.desechos .vista-inicio-impacto-valor {
+    color: #dc2626;
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    -webkit-text-fill-color: #dc2626;
+}
+
+.vista-inicio-impacto-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Colores de etiqueta por tarjeta */
+.vista-inicio-impacto-card.total .vista-inicio-impacto-label    { color: #1e40af; }
+.vista-inicio-impacto-card.resueltos .vista-inicio-impacto-label { color: #065f46; }
+.vista-inicio-impacto-card.fauna .vista-inicio-impacto-label    { color: #92400e; }
+.vista-inicio-impacto-card.desechos .vista-inicio-impacto-label { color: #991b1b; }
+
+/*fin de la pagina VistaInicio*/

@@ -1,0 +1,491 @@
+/*Pagina Reporte Rediseñada
+/* ==========================================================================
+   Estilos del Módulo de Reportes (Fresco, Minimalista, Atractivo)
+   ========================================================================== */
+
+/* Contenedor principal de la tarjeta del formulario */
+.reporte-contenedor-principal {
+    background: rgba(255, 255, 255, 0.149);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+    padding: 2.5rem;
+    max-width: 800px;
+    margin: 3rem auto;
+    width: 90%;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Navegación superior */
+.reporte-top-nav {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.reporte-btn-volver {
+    background: transparent;
+    border: none;
+    color: var(--color-oceano);
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.reporte-btn-volver:hover {
+    background: rgba(15, 23, 42, 0.05);
+    transform: translateX(-3px);
+}
+
+/* Cabecera y Títulos */
+.reporte-cabecera {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.reporte-titulo-principal {
+    color: var(--color-oceano);
+    font-weight: 800;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.reporte-subtitulo {
+    color: #64748b;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.reporte-titulo-paso {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--color-espuma);
+    padding-bottom: 0.8rem;
+    color: var(--color-oceano);
+    font-weight: 700;
+}
+
+/* Animación de Transición entre Pasos */
+@keyframes reporteFadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.reporte-animacion-paso {
+    animation: reporteFadeInSlideUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Barra de Progreso Visual (Stepper) */
+.reporte-stepper-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 3.5rem;
+    padding: 0 2rem;
+}
+
+.reporte-stepper-line {
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    right: 2rem;
+    height: 4px;
+    background-color: var(--color-espuma);
+    z-index: 1;
+    transform: translateY(-50%);
+    border-radius: 4px;
+}
+
+.reporte-stepper-step {
+    position: relative;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-blanco);
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 3px solid var(--color-espuma);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.reporte-stepper-step.completed {
+    background-color: var(--color-ola);
+    border-color: var(--color-ola);
+    color: var(--color-blanco);
+}
+
+.reporte-stepper-step.active {
+    background-color: var(--color-acento);
+    border-color: var(--color-acento);
+    color: var(--color-blanco);
+    transform: scale(1.2);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Agrupadores de label + input */
+.reporte-formulario-grupo {
+    margin-bottom: 1.8rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.reporte-etiqueta-input {
+    display: block;
+    font-weight: 600;
+    color: var(--color-oceano);
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+}
+
+/* Tarjetas Interactivas de Selección (Paso 1) */
+.reporte-tarjetas-grid-categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+}
+
+.reporte-tarjeta-btn {
+    background-color: var(--color-blanco);
+    border: 2px solid var(--color-espuma);
+    border-radius: 20px;
+    padding: 1.8rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.reporte-tarjeta-btn:hover {
+    border-color: var(--color-ola);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(2, 132, 199, 0.1);
+}
+
+.reporte-tarjeta-btn.activa {
+    border-color: var(--color-acento);
+    background-color: rgba(255, 107, 107, 0.04);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(255, 107, 107, 0.15);
+}
+
+.reporte-emoji {
+    font-size: 2.8rem;
+    transition: transform 0.3s ease;
+}
+
+.reporte-tarjeta-btn:hover .reporte-emoji {
+    transform: scale(1.1);
+}
+
+.reporte-tarjeta-titulo {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--color-oceano);
+    font-size: 1.1rem;
+}
+
+/* Inputs, Textareas y Selects Premium */
+.reporte-input-estilizado,
+.reporte-textarea-estilizado,
+.reporte-select-estilizado {
+    width: 100%;
+    min-height: 54px;
+    padding: 0.8rem 1.2rem;
+    background-color: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    color: var(--color-oceano);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    appearance: none;
+}
+
+.reporte-textarea-estilizado {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.reporte-input-estilizado:focus,
+.reporte-textarea-estilizado:focus,
+.reporte-select-estilizado:focus {
+    outline: none;
+    background-color: var(--color-blanco);
+    border-color: var(--color-ola);
+    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+}
+
+.reporte-select-estilizado {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230F172A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1.2rem center;
+    background-size: 1em;
+    padding-right: 3rem;
+}
+
+/* Nuevos Estilos para Coordenadas Separadas */
+.reporte-grupo-coordenadas-moderno {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.reporte-input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.reporte-btn-capturar-gps {
+    background: var(--color-ola);
+    color: var(--color-blanco);
+    border: none;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
+    flex-shrink: 0;
+}
+
+.reporte-btn-capturar-gps:hover:not(:disabled) {
+    background: #0369a1;
+    /* ola oscuro */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+}
+
+.reporte-btn-capturar-gps:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Spinner CSS para el botón GPS */
+.spinner-mini {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Ajustes visuales para el checkbox */
+.reporte-checkbox-premium-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #f8fafc;
+    padding: 1.2rem;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.reporte-checkbox-premium-container:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.reporte-checkbox-premium-container input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--color-ola);
+    cursor: pointer;
+}
+
+/* Contenedor de Botones de Navegación */
+.reporte-botones-navegacion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    gap: 1rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 2rem;
+}
+
+/* Botones específicos del componente Reporte */
+.reporte-btn {
+    padding: 1rem 2.5rem;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reporte-btn-atras {
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.reporte-btn-atras:hover {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    color: var(--color-oceano);
+    border-color: #94a3b8;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.reporte-btn-siguiente {
+    background: linear-gradient(135deg, var(--color-ola) 0%, #0369a1 100%);
+    color: var(--color-blanco);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25);
+}
+
+.reporte-btn-siguiente:hover:not(:disabled) {
+    background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(2, 132, 199, 0.35);
+}
+
+.reporte-btn-siguiente:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.reporte-btn-enviar {
+    background: linear-gradient(135deg, var(--color-acento) 0%, #ff4757 100%);
+    color: var(--color-blanco);
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.35);
+}
+
+.reporte-btn-enviar:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+}
+
+.reporte-btn-enviar:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Responsividad */
+@media (max-width: 640px) {
+    .reporte-contenedor-principal {
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+        border-radius: 20px;
+        width: 95%;
+    }
+
+    .reporte-titulo-principal {
+        font-size: 2rem;
+    }
+
+    .reporte-grupo-coordenadas-moderno {
+        flex-direction: column;
+    }
+
+    .reporte-btn-capturar-gps {
+        width: 100%;
+        height: 54px;
+    }
+
+    .reporte-botones-navegacion {
+        flex-direction: column-reverse;
+    }
+
+    .reporte-btn {
+        width: 100%;
+    }
+}
+
+/* Estilos para el Input de Archivo (Fotografía) */
+.reporte-input-archivo {
+    position: relative;
+    width: 100%;
+    min-height: 70px;
+    padding: 1.2rem;
+    background-color: rgba(2, 132, 199, 0.02);
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    color: var(--color-oceano);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.reporte-input-archivo:hover {
+    border-color: var(--color-ola);
+    background-color: rgba(2, 132, 199, 0.05);
+}
+
+/* El botón interno del input de archivo */
+.reporte-input-archivo::file-selector-button {
+    background-color: #f1f5f9;
+    color: var(--color-oceano);
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin-right: 1.5rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.reporte-input-archivo::file-selector-button:hover {
+    background-color: #e2e8f0;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/*Fin Pagina Reporte*/

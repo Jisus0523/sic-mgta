@@ -1,0 +1,123 @@
+/* Archivo: frontend/src/index.css */
+
+/* ==========================================================================
+   Importación de Fuentes (Google Fonts)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+/* ==========================================================================
+   Variables Globales y Efectos Modernos (Atardecer Costero)
+   ========================================================================== */
+:root {
+  /* Paleta Base Estricta */
+  --color-arena: #F8F9FA;
+  --color-oceano: #0F172A;
+  --color-ola: #0284C7;
+  --color-espuma: #E0F2FE;
+  --color-acento: #FF6B6B;
+  --color-acento-hover: #FA5252;
+  --color-blanco: #FFFFFF;
+  --color-arrecife: #10B981;
+
+  /* Gradientes Dinámicos */
+  --gradiente-hero: linear-gradient(135deg, #0a0030ee 0%, #061124cf 50%, var(--color-ola) 100%);
+  --gradiente-atardecer: linear-gradient(135deg, #032d7cb9 50%, #010d55bc 50%);
+  --gradiente-atardecer-hover: linear-gradient(135deg, #010d55bc 50%, #032d7cb9 50%);
+  --gradiente-btn-secundario: linear-gradient(135deg, var(--color-espuma) 0%, #BAE6FD 100%);
+
+  /* Sombras y Efectos Flotantes */
+  --sombra-suave: 0 10px 30px rgba(0, 0, 0, 0.05);
+  --sombra-tarjeta: 0 20px 40px rgba(15, 23, 42, 0.06);
+  --sombra-tarjeta-hover: 0 30px 60px rgba(15, 23, 42, 0.259);
+  --sombra-coral: 0 10px 25px rgba(255, 107, 107, 0.4);
+  --sombra-coral-hover: 0 15px 30px rgba(255, 107, 107, 0.55);
+  --sombra-texto: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   Reset y Tipografía General
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-arena);
+  color: var(--color-oceano);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Efecto de fondo dinámico moderno (Blobs difuminados) */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(120px);
+  opacity: 0.3;
+  animation: flotarFondo 20s infinite alternate ease-in-out;
+  pointer-events: none;
+  /* Para no interferir con los clics */
+}
+
+body::before {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: var(--color-ola);
+}
+
+body::after {
+  bottom: -10%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  max-width: 700px;
+  max-height: 700px;
+  background: #38bdf8;
+  /* Azul más vibrante */
+  animation-delay: -10s;
+}
+
+@keyframes flotarFondo {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(5%, 5%) scale(1.1);
+  }
+}
+
+h1,
+h2,
+h3,
+.titulo-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+
+
+.main-content {
+  flex: 1;
+  /* Esto obliga al contenido a expandirse y empujar el Footer */
+  display: flex;
+  flex-direction: column;
+}

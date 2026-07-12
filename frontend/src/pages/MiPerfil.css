@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Mi Perfil (Aislado con prefijo "mi-perfil-")
+   ========================================================================== */
+
+   .mi-perfil-contenedor-principal {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    width: 100%;
+    min-height: calc(100vh - 200px);
+  }
+  
+  .mi-perfil-cabecera {
+    margin-bottom: 2rem;
+  }
+  
+  .mi-perfil-titulo {
+    font-size: 2.2rem;
+    color: var(--color-oceano);
+    margin-bottom: 0.5rem;
+  }
+  
+  .mi-perfil-subtitulo {
+    color: #64748B;
+    font-size: 1rem;
+  }
+  
+  /* Estados */
+  .mi-perfil-cargando,
+  .mi-perfil-error {
+    text-align: center;
+    padding: 4rem;
+    font-size: 1.2rem;
+    color: #64748B;
+  }
+  
+  .mi-perfil-error {
+    color: #EF4444;
+  }
+  
+  /* Grid Principal */
+  .mi-perfil-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 800px) {
+    .mi-perfil-grid {
+      grid-template-columns: 3fr 2fr;
+      align-items: start;
+    }
+  }
+  
+  /* Tarjetas */
+  .mi-perfil-tarjeta {
+    background: rgba(255, 255, 255, 0.149);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  }
+  
+  .mi-perfil-tarjeta-seguridad {
+    border-top: 5px solid var(--color-acento);
+  }
+  
+  .mi-perfil-encabezado-tarjeta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #F1F5F9;
+  }
+  
+  .mi-perfil-icono-tarjeta {
+    font-size: 1.8rem;
+    background-color: var(--color-arena);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+  }
+  
+  .mi-perfil-encabezado-tarjeta h3 {
+    color: var(--color-oceano);
+    font-size: 1.4rem;
+    margin: 0;
+  }
+  
+  /* Datos Personales */
+  .mi-perfil-campos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (min-width: 500px) {
+    .mi-perfil-campos-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .mi-perfil-campo-completo {
+    grid-column: 1 / -1;
+  }
+  
+  .mi-perfil-campo label {
+    display: block;
+    font-size: 0.85rem;
+    color: #64748B;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .mi-perfil-valor {
+    font-size: 1.1rem;
+    color: var(--color-oceano);
+    font-weight: 500;
+    padding: 0.8rem;
+    background-color: #F8FAFC;
+    border-radius: 8px;
+    border: 1px solid #E2E8F0;
+  }
+  
+  .mi-perfil-nota {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #94A3B8;
+    font-style: italic;
+  }
+  
+  /* Badge Rol */
+  .mi-perfil-badge-rol {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  
+  .mi-perfil-badge-rol.admin {
+    background-color: #FEF3C7;
+    color: #D97706;
+  }
+  
+  .mi-perfil-badge-rol.ciudadano {
+    background-color: var(--color-espuma);
+    color: var(--color-ola);
+  }
+  
+  /* Formulario Seguridad */
+  .mi-perfil-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .mi-perfil-grupo-input label {
+    display: block;
+    color: var(--color-oceano);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .mi-perfil-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid #E2E8F0;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #F8FAFC;
+  }
+  
+  .mi-perfil-input:focus {
+    outline: none;
+    border-color: var(--color-ola);
+    background-color: var(--color-blanco);
+    box-shadow: 0 0 0 4px rgba(0, 168, 232, 0.1);
+  }
+  
+  .mi-perfil-btn-guardar {
+    background-color: var(--color-ola);
+    color: var(--color-blanco);
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+  }
+  
+  .mi-perfil-btn-guardar:hover:not(:disabled) {
+    background-color: var(--color-oceano);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 168, 232, 0.2);
+  }
+  
+  .mi-perfil-btn-guardar:disabled {
+    background-color: #CBD5E1;
+    cursor: not-allowed;
+  }

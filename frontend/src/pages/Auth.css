@@ -1,0 +1,682 @@
+/* Pagina Autenticación */
+/* ==========================================================================
+   Módulo de Autenticación (Aislado con prefijo "auth-")
+   ========================================================================== */
+
+/* Contenedor principal centrado */
+.auth-contenedor-principal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+/* Tarjeta Doble Deslizable */
+.auth-tarjeta-doble {
+    position: relative;
+    background: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 480px;
+    /* Por defecto en móvil */
+    min-height: auto;
+    /* Dinámico en móvil */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: max-width 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* 1. SECCIÓN DE FORMULARIOS */
+.auth-seccion-formularios {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+}
+
+.auth-bloque-formulario {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    width: 100%;
+    padding: 2.5rem 1.5rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s ease;
+}
+
+/* Animación de deslizamiento responsivo (Movil-first) */
+.auth-mostrar-login .auth-login-bloque {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 5;
+    pointer-events: all;
+    position: relative;
+    /* Dicta la altura de la tarjeta */
+}
+
+.auth-mostrar-login .auth-registro-bloque {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    position: absolute;
+    /* No afecta la altura */
+}
+
+.auth-mostrar-registro .auth-login-bloque {
+    transform: translateX(-100%);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    position: absolute;
+    /* No afecta la altura */
+}
+
+.auth-mostrar-registro .auth-registro-bloque {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 5;
+    pointer-events: all;
+    position: relative;
+    /* Dicta la altura de la tarjeta */
+}
+
+/* Botón de regreso */
+.auth-volver {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.5rem;
+    color: var(--color-oceano);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.auth-volver:hover {
+    color: var(--color-ola);
+}
+
+/* Cabeceras de los Formularios */
+.auth-cabecera {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo-header {
+    width: 60px;
+    height: auto;
+    margin: 0 auto 0.5rem auto;
+    display: block;
+}
+
+.auth-titulo-form {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-oceano);
+    margin-bottom: 0.4rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.auth-subtitulo {
+    font-size: 0.9rem;
+    color: #64748B;
+}
+
+/* Formularios y cuadrícula */
+.auth-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.auth-grid-campos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* Estilo moderno de Inputs (Pill-shaped similar a la referencia) */
+.auth-grupo-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-input {
+    width: 100%;
+    height: 50px;
+    padding: 0.5rem 1rem 0.5rem 3.2rem;
+    background-color: var(--color-arena);
+    border: 2px solid transparent;
+    border-radius: 50px;
+    /* Pill-shaped */
+    color: var(--color-oceano);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.auth-input::placeholder {
+    color: #94A3B8;
+}
+
+.auth-input:focus {
+    outline: none;
+    background-color: var(--color-blanco);
+    border-color: var(--color-ola);
+    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.12);
+}
+
+/* Iconos integrados en los inputs */
+.auth-input-icono {
+    position: absolute;
+    left: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748B;
+    pointer-events: none;
+}
+
+.auth-svg-icono {
+    width: 20px;
+    height: 20px;
+}
+
+/* Recuperación de contraseña */
+.auth-olvido-contenedor {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -0.25rem;
+}
+
+.auth-link-olvido {
+    font-size: 0.8rem;
+    color: #64748B;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.auth-link-olvido:hover {
+    color: var(--color-ola);
+}
+
+/* Botón Primario (Pill-shaped con degradado Océano) */
+.auth-btn-primario {
+    height: 50px;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    /* Gradiente Océano: azul profundo a celeste */
+    background: linear-gradient(135deg, var(--color-oceano) 0%, var(--color-ola) 100%);
+    color: var(--color-blanco);
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25);
+    margin-top: 0.5rem;
+}
+
+.auth-btn-primario:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(2, 132, 199, 0.35);
+}
+
+.auth-btn-primario:active {
+    transform: scale(0.98);
+}
+
+/* Checkbox de Términos y Condiciones */
+.auth-grupo-checkbox {
+    margin-top: 0.2rem;
+}
+
+.auth-label-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: #64748B;
+    cursor: pointer;
+    line-height: 1.4;
+}
+
+.auth-checkbox {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+    accent-color: var(--color-ola);
+    border-radius: 4px;
+}
+
+.auth-link {
+    color: var(--color-ola);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+/* Botones para alternar en vista móvil */
+.auth-toggle-contenedor-movil {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.auth-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--color-ola);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.auth-toggle-btn:hover {
+    color: var(--color-oceano);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   DECORACIÓN GLOBAL (Banner superior en móvil, panel deslizante en desktop)
+   ========================================================================== */
+.auth-panel-decoracion {
+    display: none; /* Oculto en móvil */
+    position: relative;
+    width: 100%;
+    height: 160px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 24px 24px 0 0;
+}
+
+/* Fondo dinámico de Blobs líquidas y Tortugas */
+.auth-decoracion-fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.98) 100%);
+    overflow: hidden;
+}
+
+/* Blobs fluidas con la paleta Atardecer Costero y degradados elegantes */
+.auth-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0.45;
+    transition: all 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.auth-blob-1 {
+    width: 320px;
+    height: 320px;
+    top: -60px;
+    left: -60px;
+    background: linear-gradient(135deg, var(--color-acento) 0%, #a855f7 100%);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+}
+
+.auth-blob-2 {
+    width: 250px;
+    height: 250px;
+    bottom: -50px;
+    left: -30px;
+    background: linear-gradient(135deg, var(--color-ola) 0%, var(--color-espuma) 100%);
+    border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%;
+}
+
+.auth-blob-3 {
+    width: 180px;
+    height: 180px;
+    top: 80px;
+    right: -30px;
+    background: linear-gradient(135deg, var(--color-acento) 0%, var(--color-ola) 100%);
+    border-radius: 30% 70% 50% 50% / 50% 30% 70% 50%;
+}
+
+.auth-blob-4 {
+    width: 200px;
+    height: 200px;
+    bottom: -50px;
+    right: -40px;
+    background: linear-gradient(135deg, #a855f7 0%, var(--color-acento) 100%);
+    border-radius: 60% 40% 50% 50% / 40% 40% 60% 60%;
+}
+
+/* Icono de tortuga flotando suavemente */
+.auth-decoracion-tortuga-contenedor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    z-index: 10;
+    opacity: 0.15;
+    animation: authTortugaFlotando 5s ease-in-out infinite;
+}
+
+.auth-decoracion-tortuga {
+    width: 100%;
+    height: 100%;
+    stroke: var(--color-espuma);
+}
+
+@keyframes authTortugaFlotando {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-10px) rotate(5deg);
+    }
+}
+
+/* Ocultar Textos del Slider Decorativo en Móvil */
+.auth-decoracion-textos-slider {
+    display: none;
+}
+
+/* ==========================================================================
+   DISEÑO DE ESCRITORIO (Split Slider con Desplazamiento Lateral)
+   ========================================================================== */
+@media (min-width: 769px) {
+    .auth-tarjeta-doble {
+        max-width: 950px;
+        height: 600px;
+        flex-direction: row;
+    }
+
+    /* 1. Panel de Formularios (ocupa el 50% del ancho) */
+    .auth-seccion-formularios {
+        display: block;
+        /* Restaura comportamiento para desktop */
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+        z-index: 2;
+    }
+
+    /* Desplazamiento del panel de formularios de lado a lado */
+    .auth-mostrar-login .auth-seccion-formularios {
+        transform: translateX(100%);
+        /* Login a la derecha */
+    }
+
+    .auth-mostrar-registro .auth-seccion-formularios {
+        transform: translateX(0);
+        /* Registro a la izquierda */
+    }
+
+    .auth-bloque-formulario {
+        position: absolute;
+        /* Restauramos para desktop */
+        height: 100%;
+        padding: 3rem 3.5rem;
+    }
+
+    .auth-grid-campos {
+        grid-template-columns: 1fr 1fr;
+        /* Grid en dos columnas */
+        gap: 1.2rem;
+    }
+
+    .auth-campo-full {
+        grid-column: 1 / -1;
+    }
+
+    /* Ocultamos los botones de alternar móvil en desktop */
+    .auth-toggle-contenedor-movil {
+        display: none;
+    }
+
+    /* 2. Panel de Decoración (ocupa el 50% del ancho) */
+    .auth-panel-decoracion {
+        display: block; /* Visible en desktop */
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        border-radius: 0;
+        /* Resetear banner de móvil */
+        transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+        z-index: 5;
+    }
+
+    /* Desplazamiento del panel decorativo de lado a lado (opuesto al form) */
+    .auth-mostrar-login .auth-panel-decoracion {
+        transform: translateX(0);
+        /* Decoración a la izquierda */
+    }
+
+    .auth-mostrar-registro .auth-panel-decoracion {
+        transform: translateX(100%);
+        /* Decoración a la derecha */
+    }
+
+
+    /* Textos del Slider Decorativo */
+    .auth-decoracion-textos-slider {
+        display: block;
+        /* Restaura en Desktop */
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 12;
+    }
+
+    .auth-decoracion-bloque-texto {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 3rem 4rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: var(--color-blanco);
+        transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.5s ease;
+    }
+
+    .auth-decoracion-bloque-texto h2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #ffffff 0%, var(--color-espuma) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .auth-decoracion-bloque-texto p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        opacity: 0.85;
+        margin-bottom: 2rem;
+        max-width: 320px;
+    }
+
+    /* Botón Secundario de intercambio */
+    .auth-btn-toggle-decoracion {
+        background: transparent;
+        border: 2px solid var(--color-blanco);
+        color: var(--color-blanco);
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        padding: 0.8rem 2.2rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .auth-btn-toggle-decoracion:hover {
+        background-color: var(--color-blanco);
+        color: var(--color-oceano);
+        transform: translateY(-2px);
+    }
+
+    /* Efectos del deslizamiento en los textos informativos */
+    .auth-mostrar-login .auth-decoracion-texto-login {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .auth-mostrar-login .auth-decoracion-texto-registro {
+        transform: translateX(100%);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .auth-mostrar-registro .auth-decoracion-texto-login {
+        transform: translateX(-100%);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .auth-mostrar-registro .auth-decoracion-texto-registro {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+/* ==========================================================================
+   Tortugas Flotantes por toda la pantalla
+   ========================================================================== */
+.auth-floating-turtles-wrapper {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1; /* Detrás de la tarjeta de login */
+}
+
+.auth-floating-turtle {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    opacity: 0; /* Oculta al inicio */
+}
+
+.auth-floating-turtle svg {
+    width: 100%;
+    height: 100%;
+    stroke: #065f46; /* Verde oscuro (Emerald 800) */
+    stroke-width: 2px;
+}
+
+/* Rutas de animación */
+@keyframes floatTurtle1 {
+    0% { transform: translate(-10vw, 10vh) rotate(15deg) scale(0.6); opacity: 0; }
+    10% { opacity: 0.15; }
+    90% { opacity: 0.15; }
+    100% { transform: translate(110vw, -10vh) rotate(-15deg) scale(0.6); opacity: 0; }
+}
+
+@keyframes floatTurtle2 {
+    0% { transform: translate(110vw, 40vh) rotate(-115deg) scale(0.8); opacity: 0; }
+    10% { opacity: 0.1; }
+    90% { opacity: 0.1; }
+    100% { transform: translate(-10vw, 60vh) rotate(-75deg) scale(0.8); opacity: 0; }
+}
+
+@keyframes floatTurtle3 {
+    0% { transform: translate(-10vw, 80vh) rotate(45deg) scale(0.5); opacity: 0; }
+    10% { opacity: 0.12; }
+    90% { opacity: 0.12; }
+    100% { transform: translate(110vw, 30vh) rotate(0deg) scale(0.5); opacity: 0; }
+}
+
+@keyframes floatTurtle4 {
+    0% { transform: translate(30vw, 110vh) rotate(-45deg) scale(0.7); opacity: 0; }
+    10% { opacity: 0.08; }
+    90% { opacity: 0.08; }
+    100% { transform: translate(60vw, -10vh) rotate(-20deg) scale(0.7); opacity: 0; }
+}
+
+/* Asignar animaciones con diferentes retrasos y duraciones */
+.auth-floating-turtle-1 { animation: floatTurtle1 25s linear infinite; }
+.auth-floating-turtle-2 { animation: floatTurtle2 30s linear infinite 5s; }
+.auth-floating-turtle-3 { animation: floatTurtle3 28s linear infinite 12s; }
+.auth-floating-turtle-4 { animation: floatTurtle4 22s linear infinite 2s; }
+.auth-floating-turtle-5 { animation: floatTurtle1 27s linear infinite 15s; }
+.auth-floating-turtle-6 { animation: floatTurtle2 24s linear infinite 18s; }
+.auth-floating-turtle-7 { animation: floatTurtle3 32s linear infinite 6s; }
+.auth-floating-turtle-8 { animation: floatTurtle4 26s linear infinite 20s; }
+
+/* Ocultar tortuga grande decorativa en móviles */
+@media (max-width: 768px) {
+    .auth-decoracion-tortuga-contenedor {
+        display: none !important;
+    }
+}/* CSS Updates for Validation */
+
+.auth-input-error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12) !important;
+}
+
+.auth-advertencia {
+    color: #ef4444;
+    font-size: 0.75rem;
+    position: absolute;
+    bottom: -18px;
+    left: 1.5rem;
+    white-space: nowrap;
+}
+
+.auth-btn-eye {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #64748B;
+    padding: 0;
+    transition: color 0.3s;
+}
+
+.auth-btn-eye:hover {
+    color: var(--color-oceano);
+}
+
+.auth-input-password {
+    padding-right: 3rem !important; /* Espacio para el icono del ojo */
+}
