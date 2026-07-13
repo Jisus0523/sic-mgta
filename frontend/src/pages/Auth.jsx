@@ -83,6 +83,8 @@ export default function Auth() {
     const [cargando, setCargando] = useState(false);
     const [mostrarPassword, setMostrarPassword] = useState(false);
     const [mostrarConfirmarPassword, setMostrarConfirmarPassword] = useState(false);
+    const [registroExitoso, setRegistroExitoso] = useState(false);
+    const [emailRegistrado, setEmailRegistrado] = useState('');
 
     const { formulario, setFormulario, manejarCambio, advertencias } = useValidacionForm({
         nombre: '',
@@ -139,8 +141,8 @@ export default function Auth() {
             if (error) {
                 alert("Error al registrarse: " + error.message);
             } else {
-                alert(`¡Bienvenido/a, ${formulario.nombre}! Tu cuenta ha sido registrada exitosamente.`);
-                alternarModo(); // Cambia a la vista de Iniciar Sesión automáticamente
+                setEmailRegistrado(formulario.email);
+                setRegistroExitoso(true);
             }
 
         } else {
@@ -166,6 +168,83 @@ export default function Auth() {
         // Limpiamos formulario para una transición agradable
         setFormulario({ nombre: '', apellido: '', cedula: '', fechaNacimiento: '', email: '', password: '', confirmarPassword: '', terminosAceptados: false });
     };
+
+    // ── Panel de confirmación de email ──────────────────────────────────────
+    if (registroExitoso) {
+        // Intenta detectar el dominio para abrir el webmail correspondiente
+        const dominio = emailRegistrado.split('@')[1] || '';
+        const webmailUrls = {
+            'gmail.com': 'https://mail.google.com',
+            'googlemail.com': 'https://mail.google.com',
+            'outlook.com': 'https://outlook.live.com',
+            'hotmail.com': 'https://outlook.live.com',
+            'live.com': 'https://outlook.live.com',
+            'yahoo.com': 'https://mail.yahoo.com',
+            'yahoo.es': 'https://mail.yahoo.com',
+            'icloud.com': 'https://www.icloud.com/mail',
+        };
+        const webmailUrl = webmailUrls[dominio] || `mailto:${emailRegistrado}`;
+
+        return (
+            <main className="auth-contenedor-principal">
+                <div className="auth-floating-turtles-wrapper">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i} className={`auth-floating-turtle auth-floating-turtle-${i + 1}`}>
+                            <IconoTurtle />
+                        </div>
+                    ))}
+                </div>
+
+                <div className="auth-confirmacion-panel">
+                    <div className="auth-confirmacion-icono-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="auth-confirmacion-icono">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                        <div className="auth-confirmacion-check">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <h2 className="auth-confirmacion-titulo">¡Revisa tu correo!</h2>
+                    <p className="auth-confirmacion-desc">
+                        Te enviamos un enlace de confirmación a:
+                    </p>
+                    <p className="auth-confirmacion-email">{emailRegistrado}</p>
+                    <p className="auth-confirmacion-instruccion">
+                        Debes confirmar tu correo antes de poder iniciar sesión. Si no lo ves, revisa tu carpeta de <strong>spam o correo no deseado</strong>.
+                    </p>
+
+                    <a
+                        href={webmailUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="auth-btn-abrir-correo"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:'1.1rem',height:'1.1rem'}}>
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                            <polyline points="15 3 21 3 21 9" />
+                            <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
+                        Abrir mi correo
+                    </a>
+
+                    <button
+                        className="auth-btn-ir-login"
+                        onClick={() => {
+                            setRegistroExitoso(false);
+                            setEmailRegistrado('');
+                            setEsRegistro(false);
+                        }}
+                    >
+                        Ir a Iniciar Sesión
+                    </button>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="auth-contenedor-principal">
