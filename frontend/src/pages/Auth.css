@@ -164,7 +164,7 @@
     /* Pill-shaped */
     color: var(--color-oceano);
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.80rem;
     transition: all 0.3s ease;
     box-sizing: border-box;
 }
@@ -302,7 +302,8 @@
    DECORACIÓN GLOBAL (Banner superior en móvil, panel deslizante en desktop)
    ========================================================================== */
 .auth-panel-decoracion {
-    display: none; /* Oculto en móvil */
+    display: none;
+    /* Oculto en móvil */
     position: relative;
     width: 100%;
     height: 160px;
@@ -460,7 +461,8 @@
 
     /* 2. Panel de Decoración (ocupa el 50% del ancho) */
     .auth-panel-decoracion {
-        display: block; /* Visible en desktop */
+        display: block;
+        /* Visible en desktop */
         position: absolute;
         top: 0;
         width: 50%;
@@ -580,64 +582,145 @@
    ========================================================================== */
 .auth-floating-turtles-wrapper {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     pointer-events: none;
     overflow: hidden;
-    z-index: 1; /* Detrás de la tarjeta de login */
+    z-index: 1;
+    /* Detrás de la tarjeta de login */
 }
 
 .auth-floating-turtle {
     position: absolute;
     width: 60px;
     height: 60px;
-    opacity: 0; /* Oculta al inicio */
+    opacity: 0;
+    /* Oculta al inicio */
 }
 
 .auth-floating-turtle svg {
     width: 100%;
     height: 100%;
-    stroke: #065f46; /* Verde oscuro (Emerald 800) */
+    stroke: #065f46;
+    /* Verde oscuro (Emerald 800) */
     stroke-width: 2px;
 }
 
 /* Rutas de animación */
 @keyframes floatTurtle1 {
-    0% { transform: translate(-10vw, 10vh) rotate(15deg) scale(0.6); opacity: 0; }
-    10% { opacity: 0.15; }
-    90% { opacity: 0.15; }
-    100% { transform: translate(110vw, -10vh) rotate(-15deg) scale(0.6); opacity: 0; }
+    0% {
+        transform: translate(-10vw, 10vh) rotate(15deg) scale(0.6);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.15;
+    }
+
+    90% {
+        opacity: 0.15;
+    }
+
+    100% {
+        transform: translate(110vw, -10vh) rotate(-15deg) scale(0.6);
+        opacity: 0;
+    }
 }
 
 @keyframes floatTurtle2 {
-    0% { transform: translate(110vw, 40vh) rotate(-115deg) scale(0.8); opacity: 0; }
-    10% { opacity: 0.1; }
-    90% { opacity: 0.1; }
-    100% { transform: translate(-10vw, 60vh) rotate(-75deg) scale(0.8); opacity: 0; }
+    0% {
+        transform: translate(110vw, 40vh) rotate(-115deg) scale(0.8);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.1;
+    }
+
+    90% {
+        opacity: 0.1;
+    }
+
+    100% {
+        transform: translate(-10vw, 60vh) rotate(-75deg) scale(0.8);
+        opacity: 0;
+    }
 }
 
 @keyframes floatTurtle3 {
-    0% { transform: translate(-10vw, 80vh) rotate(45deg) scale(0.5); opacity: 0; }
-    10% { opacity: 0.12; }
-    90% { opacity: 0.12; }
-    100% { transform: translate(110vw, 30vh) rotate(0deg) scale(0.5); opacity: 0; }
+    0% {
+        transform: translate(-10vw, 80vh) rotate(45deg) scale(0.5);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.12;
+    }
+
+    90% {
+        opacity: 0.12;
+    }
+
+    100% {
+        transform: translate(110vw, 30vh) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
 }
 
 @keyframes floatTurtle4 {
-    0% { transform: translate(30vw, 110vh) rotate(-45deg) scale(0.7); opacity: 0; }
-    10% { opacity: 0.08; }
-    90% { opacity: 0.08; }
-    100% { transform: translate(60vw, -10vh) rotate(-20deg) scale(0.7); opacity: 0; }
+    0% {
+        transform: translate(30vw, 110vh) rotate(-45deg) scale(0.7);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.08;
+    }
+
+    90% {
+        opacity: 0.08;
+    }
+
+    100% {
+        transform: translate(60vw, -10vh) rotate(-20deg) scale(0.7);
+        opacity: 0;
+    }
 }
 
 /* Asignar animaciones con diferentes retrasos y duraciones */
-.auth-floating-turtle-1 { animation: floatTurtle1 25s linear infinite; }
-.auth-floating-turtle-2 { animation: floatTurtle2 30s linear infinite 5s; }
-.auth-floating-turtle-3 { animation: floatTurtle3 28s linear infinite 12s; }
-.auth-floating-turtle-4 { animation: floatTurtle4 22s linear infinite 2s; }
-.auth-floating-turtle-5 { animation: floatTurtle1 27s linear infinite 15s; }
-.auth-floating-turtle-6 { animation: floatTurtle2 24s linear infinite 18s; }
-.auth-floating-turtle-7 { animation: floatTurtle3 32s linear infinite 6s; }
-.auth-floating-turtle-8 { animation: floatTurtle4 26s linear infinite 20s; }
+.auth-floating-turtle-1 {
+    animation: floatTurtle1 25s linear infinite;
+}
+
+.auth-floating-turtle-2 {
+    animation: floatTurtle2 30s linear infinite 5s;
+}
+
+.auth-floating-turtle-3 {
+    animation: floatTurtle3 28s linear infinite 12s;
+}
+
+.auth-floating-turtle-4 {
+    animation: floatTurtle4 22s linear infinite 2s;
+}
+
+.auth-floating-turtle-5 {
+    animation: floatTurtle1 27s linear infinite 15s;
+}
+
+.auth-floating-turtle-6 {
+    animation: floatTurtle2 24s linear infinite 18s;
+}
+
+.auth-floating-turtle-7 {
+    animation: floatTurtle3 32s linear infinite 6s;
+}
+
+.auth-floating-turtle-8 {
+    animation: floatTurtle4 26s linear infinite 20s;
+}
 
 /* Ocultar tortuga grande decorativa en móviles */
 @media (max-width: 768px) {
@@ -678,7 +761,29 @@
 }
 
 .auth-input-password {
-    padding-right: 3rem !important; /* Espacio para el icono del ojo */
+    padding-right: 3rem !important;
+    /* Espacio para el icono del ojo */
+}
+
+.auth-password-hint {
+    position: absolute;
+    top: 100%;
+    left: 1.5rem;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 0.2rem;
+    white-space: nowrap;
+    transition: color 0.25s ease;
+}
+
+.auth-password-hint--ok {
+    color: #22c55e;
+    font-weight: 500;
+}
+
+.auth-password-hint--error {
+    color: #ef4444;
+    font-weight: 500;
 }
 
 /* ── Panel de confirmación de email ─────────────────────────────────────── */
@@ -702,8 +807,15 @@
 }
 
 @keyframes auth-panel-entrada {
-    from { opacity: 0; transform: translateY(30px) scale(0.95); }
-    to   { opacity: 1; transform: translateY(0)   scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .auth-confirmacion-icono-wrapper {
@@ -743,8 +855,15 @@
 }
 
 @keyframes auth-check-pop {
-    from { opacity: 0; transform: scale(0); }
-    to   { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .auth-confirmacion-titulo {

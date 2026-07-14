@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { useValidacionForm } from '../hooks/useValidacionForm';
+import { toast } from 'react-hot-toast';
+import { translateError } from '../utils/errorTranslator';
 import './MiPerfil.css';
 
 const IconoEye = () => (
@@ -61,12 +63,12 @@ export default function MiPerfil() {
     e.preventDefault();
 
     if (passwords.password !== passwords.confirmarPassword) {
-      alert("Las contraseñas no coinciden. Por favor, verifica.");
+      toast.error("Las contraseñas no coinciden. Por favor, verifica.");
       return;
     }
 
     if (passwords.password.length < 8) {
-      alert("La contraseña debe tener al menos 8 caracteres.");
+      toast.error("La contraseña debe tener al menos 8 caracteres.");
       return;
     }
 
@@ -77,9 +79,9 @@ export default function MiPerfil() {
     });
 
     if (error) {
-      alert("Error al actualizar la contraseña: " + error.message);
+      toast.error(translateError(error.message));
     } else {
-      alert("¡Contraseña actualizada exitosamente!");
+      toast.success("¡Contraseña actualizada exitosamente!");
       setPasswords({ password: '', confirmarPassword: '' }); // Limpiamos el formulario
     }
 

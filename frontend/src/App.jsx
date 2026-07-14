@@ -16,16 +16,23 @@ import RecuperarPassword from './pages/RecuperarPassword';
 import Noticias from './pages/Noticias';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import ProtectedRoute from './components/ProtectedRoute';
+import { Toaster } from 'react-hot-toast';
 
-function MainLayout({ isOnline, usuario, pendingSyncs }) {
+function MainLayout({ isOnline, usuario, cargandoUsuario, pendingSyncs }) {
   const location = useLocation();
   const esVistaAuth = location.pathname === '/auth' || location.pathname === '/recuperar-password';
 
   const esVistaAdmin = location.pathname.startsWith('/admin');
 
+  if (cargandoUsuario) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'var(--color-oceano)' }}>Cargando sistema...</div>;
+  }
+
   return (
     <>
       <ScrollToTop />
+      <Toaster position="top-right" toastOptions={{ duration: 4000, style: { background: '#333', color: '#fff', borderRadius: '10px' } }} />
       {!esVistaAuth && <Navbar isOnline={isOnline} usuario={usuario} pendingSyncs={pendingSyncs} />}
       <Routes>
         <Route path="/" element={<VistaInicio usuario={usuario} />} />
@@ -34,9 +41,23 @@ function MainLayout({ isOnline, usuario, pendingSyncs }) {
         <Route path="/reporte" element={<Reporte />} />
         <Route path="/catalogo" element={<CatalogoEspecies />} />
         <Route path="/noticias" element={<Noticias />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/mis-reportes" element={<MisReportes />} />
-        <Route path="/mi-perfil" element={<MiPerfil />} />
+        
+        {/* Rutas Protegidas */}
+        <Route path="/admin" element={
+          <ProtectedRoute usuario={usuario} rolesPermitidos={['admin']}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/mis-reportes" element={
+          <ProtectedRoute usuario={usuario}>
+            <MisReportes />
+          </ProtectedRoute>
+        } />
+        <Route path="/mi-perfil" element={
+          <ProtectedRoute usuario={usuario}>
+            <MiPerfil />
+          </ProtectedRoute>
+        } />
       </Routes>
       {!esVistaAuth && <Footer />}
       {!esVistaAdmin && <WhatsAppButton />}
@@ -48,6 +69,7 @@ function App() {
   // Estados para manejar la información de la Navbar
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [usuario, setUsuario] = useState(null);
+  const [cargandoUsuario, setCargandoUsuario] = useState(true);
   const [pendingSyncs, setPendingSyncs] = useState(0);
 
   // Monitor de conexión a internet para la PWA
@@ -60,8 +82,11 @@ function App() {
     const SESSION_FLAG = 'sic_ventana_activa';
     if (!sessionStorage.getItem(SESSION_FLAG)) {
       // Nueva ventana/pestaña: cerrar sesión previa silenciosamente
-      supabase.auth.signOut().catch(() => {});
-      sessionStorage.setItem(SESSION_FLAG, '1');
+      // OMITIMOS esto si venimos de un link de confirmación de email/password (que trae access_token en la URL)
+      if (!window.location.hash.includes('access_token')) {
+        supabase.auth.signOut().catch(() => {});
+      }
+      sessionStorage.setItem(SESSION_FLAG, 'true');
     }
     // ─────────────────────────────────────────────────────────────────────────
 
@@ -97,6 +122,7 @@ function App() {
     const fetchUserProfile = async (userId, updateAccess = false) => {
       if (!userId) {
         setUsuario(null);
+        setCargandoUsuario(false);
         return;
       }
 
@@ -117,6 +143,7 @@ function App() {
       } else {
         setUsuario(data);
       }
+      setCargandoUsuario(false);
     };
 
     // Obtener sesión inicial
@@ -141,7 +168,7 @@ function App() {
 
   return (
     <Router>
-      <MainLayout isOnline={isOnline} usuario={usuario} pendingSyncs={pendingSyncs} />
+      <MainLayout isOnline={isOnline} usuario={usuario} cargandoUsuario={cargandoUsuario} pendingSyncs={pendingSyncs} />
     </Router>
   );
 }

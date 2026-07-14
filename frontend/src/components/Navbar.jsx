@@ -46,6 +46,7 @@ export default function Navbar({ isOnline, usuario, pendingSyncs = 0 }) {
     };
 
     return (
+        <>
         <header className="navbar-contenedor">
 
             <div className="navbar-izquierda">
@@ -158,5 +159,24 @@ export default function Navbar({ isOnline, usuario, pendingSyncs = 0 }) {
             </div>
 
         </header>
+
+        {/* Banner para reportes atascados */}
+        {isOnline && pendingSyncs > 0 && (
+            <div style={{
+                backgroundColor: '#fef2f2',
+                color: '#991b1b',
+                padding: '0.75rem',
+                textAlign: 'center',
+                fontSize: '0.9rem',
+                borderBottom: '1px solid #f87171',
+                position: 'sticky',
+                top: '70px',
+                zIndex: 99
+            }}>
+                ⚠️ Tienes {pendingSyncs} reporte(s) guardado(s) localmente que no se pudieron enviar. 
+                Revisa tu conexión o vuelve a intentar más tarde en la sección <b>Mis Reportes</b>.
+            </div>
+        )}
+        </>
     );
 }

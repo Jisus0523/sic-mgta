@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { useValidacionForm } from '../hooks/useValidacionForm';
+import { toast } from 'react-hot-toast';
+import { translateError } from '../utils/errorTranslator';
 import './RecuperarPassword.css';
 import logo from '../assets/logo.png';
 
@@ -72,7 +74,7 @@ export default function RecuperarPassword() {
         const { error } = await supabase.auth.resetPasswordForEmail(formulario.email);
 
         if (error) {
-            setMensaje({ tipo: 'error', texto: "Error: " + error.message });
+            setMensaje({ tipo: 'error', texto: translateError(error.message) });
         } else {
             setMensaje({ tipo: 'exito', texto: "Código de verificación enviado a tu correo. Revisa también la carpeta de spam." });
             setPaso(2);
@@ -113,9 +115,9 @@ export default function RecuperarPassword() {
         });
 
         if (updateError) {
-            setMensaje({ tipo: 'error', texto: "Error al actualizar la contraseña: " + updateError.message });
+            setMensaje({ tipo: 'error', texto: translateError(updateError.message) });
         } else {
-            alert("¡Tu contraseña ha sido actualizada con éxito!");
+            toast.success("¡Tu contraseña ha sido actualizada con éxito!");
             navigate('/auth'); // Redirigir al login
         }
         

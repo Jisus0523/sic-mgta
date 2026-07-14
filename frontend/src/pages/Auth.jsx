@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { useValidacionForm } from '../hooks/useValidacionForm';
+import { toast } from 'react-hot-toast';
+import { translateError } from '../utils/errorTranslator';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { es } from 'date-fns/locale/es';
 import '../custom-datepicker.css';
@@ -104,22 +106,23 @@ export default function Auth() {
         if (esRegistro) {
             // VALIDACIONES DE REGISTRO
             if (formulario.password !== formulario.confirmarPassword) {
-                alert("Las contraseñas no coinciden");
+                toast.error("Las contraseñas no coinciden");
                 setCargando(false);
                 return;
             }
             if (formulario.password.length < 8) {
-                alert("La contraseña debe tener al menos 8 caracteres.");
+                toast.error("La contraseña debe tener al menos 8 caracteres.");
                 setCargando(false);
                 return;
             }
+
             if (formulario.cedula.length < 7) {
-                alert("La cédula debe tener al menos 7 dígitos.");
+                toast.error("La cédula debe tener al menos 7 dígitos.");
                 setCargando(false);
                 return;
             }
             if (!formulario.terminosAceptados) {
-                alert("Debe aceptar los Términos y Condiciones");
+                toast.error("Debe aceptar los Términos y Condiciones");
                 setCargando(false);
                 return;
             }
@@ -139,10 +142,11 @@ export default function Auth() {
             });
 
             if (error) {
-                alert("Error al registrarse: " + error.message);
+                toast.error(translateError(error.message));
             } else {
                 setEmailRegistrado(formulario.email);
                 setRegistroExitoso(true);
+                toast.success("Registro casi completo. ¡Revisa tu correo!");
             }
 
         } else {
@@ -153,9 +157,9 @@ export default function Auth() {
             });
 
             if (error) {
-                alert("Error al iniciar sesión: Credenciales incorrectas.");
+                toast.error(translateError(error.message));
             } else {
-                alert("¡Inicio de sesión exitoso!");
+                toast.success("¡Inicio de sesión exitoso!");
                 navigate('/'); // Redirige al inicio (dashboard)
             }
         }
@@ -223,7 +227,7 @@ export default function Auth() {
                         rel="noopener noreferrer"
                         className="auth-btn-abrir-correo"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{width:'1.1rem',height:'1.1rem'}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1.1rem', height: '1.1rem' }}>
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                             <polyline points="15 3 21 3 21 9" />
                             <line x1="10" y1="14" x2="21" y2="3" />
@@ -248,7 +252,7 @@ export default function Auth() {
 
     return (
         <main className="auth-contenedor-principal">
-            
+
             {/* Animación de tortugas flotantes por toda la pantalla */}
             <div className="auth-floating-turtles-wrapper">
                 {[...Array(8)].map((_, i) => (
@@ -371,6 +375,21 @@ export default function Auth() {
                                         {mostrarPassword ? <IconoEyeOff /> : <IconoEye />}
                                     </button>
                                     {advertencias.password && <span className="auth-advertencia">{advertencias.password}</span>}
+                                    {esRegistro && (
+                                        <span className={`auth-password-hint ${formulario.password.length === 0 ? '' :
+                                                formulario.password.length >= 8 && formulario.password.length <= 16 ? 'auth-password-hint--ok' :
+                                                    'auth-password-hint--error'
+                                            }`}>
+                                            {formulario.password.length === 0
+                                                ? 'Mín 8 caracteres · Máx 16'
+                                                : formulario.password.length < 8
+                                                    ? `Faltan ${8 - formulario.password.length} caracteres más (mín. 8)`
+                                                    : formulario.password.length > 16
+                                                        ? `Excede el límite por ${formulario.password.length - 16} (máx. 16)`
+                                                        : `✓ Longitud válida (${formulario.password.length}/16)`
+                                            }
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="auth-grupo-input">
                                     <span className="auth-input-icono"><IconoLock /></span>

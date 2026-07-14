@@ -66,6 +66,11 @@ export function useValidacionForm(estadoInicial) {
                 value = value.substring(0, 50);
                 setAdvertenciaTemporal(name, 'Máximo 50 caracteres');
             }
+            // Validación de formato básico de correo (solo muestra advertencia si es inválido y no está vacío)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (value && !emailRegex.test(value)) {
+                setAdvertenciaTemporal(name, 'Formato de correo inválido');
+            }
         }
 
         // 6. Contraseñas

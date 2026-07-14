@@ -95,6 +95,7 @@ export default function AdminDashboard() {
   const [busquedaReportes, setBusquedaReportes] = useState('');
   const [busquedaUsuarios, setBusquedaUsuarios] = useState('');
   const [busquedaEspecies, setBusquedaEspecies] = useState('');
+  const [filtroEstadoMapa, setFiltroEstadoMapa] = useState(['Pendiente', 'En Proceso']); // Por defecto solo activos
   const filtroFechaGlobal = searchParams.get('fecha') || 'todos';
 
   // Paginación
@@ -762,22 +763,29 @@ export default function AdminDashboard() {
 
   const reportesAgrupadosMapa = useMemo(() => {
     const agrupados = {};
-    reportesFiltradosPorFecha.forEach(rep => {
-      if (rep.latitud && rep.longitud) {
-        // Redondear un poco para agrupar coordenadas extremadamente cercanas
-        const key = `${Number(rep.latitud).toFixed(5)}_${Number(rep.longitud).toFixed(5)}`;
-        if (!agrupados[key]) {
-          agrupados[key] = {
-            latitud: rep.latitud,
-            longitud: rep.longitud,
-            reportes: []
-          };
+    reportesFiltradosPorFecha
+      .filter(rep => {
+        // Si filtroEstadoMapa está vacío, mostramos todos. Si no, filtramos por los seleccionados.
+        if (filtroEstadoMapa.length === 0) return true;
+        const estadoReporte = rep.estado || 'Pendiente';
+        return filtroEstadoMapa.includes(estadoReporte);
+      })
+      .forEach(rep => {
+        if (rep.latitud && rep.longitud) {
+          // Redondear un poco para agrupar coordenadas extremadamente cercanas
+          const key = `${Number(rep.latitud).toFixed(5)}_${Number(rep.longitud).toFixed(5)}`;
+          if (!agrupados[key]) {
+            agrupados[key] = {
+              latitud: rep.latitud,
+              longitud: rep.longitud,
+              reportes: []
+            };
+          }
+          agrupados[key].reportes.push(rep);
         }
-        agrupados[key].reportes.push(rep);
-      }
-    });
+      });
     return Object.values(agrupados);
-  }, [reportesFiltradosPorFecha]);
+  }, [reportesFiltradosPorFecha, filtroEstadoMapa]);
 
   const crearIconoMarcador = (reportesGrupo) => {
     const colores = {
@@ -846,6 +854,45 @@ export default function AdminDashboard() {
             <div className="admin-dashboard-split-view">
               <div className="admin-dashboard-map-container" style={{ position: 'relative' }}>
                 
+              {/* Filtros de estado del mapa */}
+                <div style={{
+                  position: 'absolute', top: '12px', left: '50%', transform: 'translateX(-50%)',
+                  zIndex: 1000, display: 'flex', gap: '6px', background: 'rgba(255,255,255,0.95)',
+                  padding: '8px 12px', borderRadius: '30px', boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
+                  border: '1px solid #e2e8f0', backdropFilter: 'blur(4px)'
+                }}>
+                  {['Pendiente', 'En Proceso', 'Resuelto', 'Rechazado'].map(estado => {
+                    const activo = filtroEstadoMapa.includes(estado);
+                    const coloresEstado = {
+                      'Pendiente': '#f59e0b',
+                      'En Proceso': '#3b82f6',
+                      'Resuelto': '#10b981',
+                      'Rechazado': '#ef4444',
+                    };
+                    return (
+                      <button
+                        key={estado}
+                        onClick={() => {
+                          setFiltroEstadoMapa(prev =>
+                            prev.includes(estado)
+                              ? prev.filter(e => e !== estado)
+                              : [...prev, estado]
+                          );
+                        }}
+                        style={{
+                          padding: '4px 12px', borderRadius: '20px', border: `2px solid ${coloresEstado[estado]}`,
+                          background: activo ? coloresEstado[estado] : 'transparent',
+                          color: activo ? 'white' : coloresEstado[estado],
+                          cursor: 'pointer', fontSize: '0.78rem', fontWeight: '600',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        {estado}
+                      </button>
+                    );
+                  })}
+                </div>
+
                 {/* Leyenda del Mapa */}
                 <div style={{ position: 'absolute', bottom: '20px', left: '20px', zIndex: 1000, backgroundColor: 'rgba(255, 255, 255, 0.95)', padding: '12px 15px', borderRadius: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)', fontSize: '0.85rem', backdropFilter: 'blur(4px)', border: '1px solid #e2e8f0' }}>
                   <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9rem', color: 'var(--admin-text-principal)', fontWeight: '700' }}>Categorías</h4>

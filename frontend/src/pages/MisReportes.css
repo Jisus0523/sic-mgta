@@ -349,3 +349,295 @@
   border-radius: 2px;
   background-color: var(--color-ola);
 }
+
+/* ==========================================================================
+   Nuevas Mejoras: Dashboard, Filtros, FAB y Detalles
+   ========================================================================== */
+
+/* ── Estadísticas Dashboard ── */
+.mis-reportes-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.mis-reportes-stat-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mis-reportes-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.mis-reportes-stat-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mis-reportes-stat-icon-wrapper.blue {
+    background-color: rgba(2, 132, 199, 0.12);
+    color: #0284c7;
+}
+
+.mis-reportes-stat-icon-wrapper.green {
+    background-color: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+}
+
+.mis-reportes-stat-icon-wrapper.amber {
+    background-color: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+}
+
+.mis-reportes-icono-stat {
+    width: 28px;
+    height: 28px;
+}
+
+.mis-reportes-stat-info h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-oceano);
+    margin: 0;
+    line-height: 1.1;
+}
+
+.mis-reportes-stat-info p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ── Filtros ── */
+.mis-reportes-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+}
+
+.mis-reportes-filtro-btn {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1.5px solid rgba(0, 119, 182, 0.15);
+    color: #475569;
+    padding: 0.5rem 1.25rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.mis-reportes-filtro-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 119, 182, 0.4);
+    transform: translateY(-2px);
+}
+
+.mis-reportes-filtro-btn.activo {
+    background: var(--color-oceano);
+    color: white;
+    border-color: var(--color-oceano);
+    box-shadow: 0 4px 12px rgba(0, 119, 182, 0.25);
+}
+
+/* ── Mejoras en Tarjetas (Detalles Footer) ── */
+.mis-reportes-detalles-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+@media (min-width: 480px) {
+    .mis-reportes-detalles-footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+}
+
+.mis-reportes-detalles {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0;
+}
+
+.mis-reportes-tarjeta-overlay .mis-reportes-detalles {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.mis-reportes-icono-pin {
+    width: 16px;
+    height: 16px;
+    color: #ef4444; /* Rojo para el pin */
+    flex-shrink: 0;
+}
+
+.mis-reportes-tarjeta-overlay .mis-reportes-icono-pin {
+    color: #fca5a5;
+}
+
+.mis-reportes-btn-detalles {
+    background: transparent;
+    border: none;
+    color: var(--color-ola);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
+    text-align: left;
+}
+
+.mis-reportes-tarjeta-overlay .mis-reportes-btn-detalles {
+    color: var(--color-blanco);
+    opacity: 0.9;
+}
+
+.mis-reportes-btn-detalles:hover {
+    color: var(--color-oceano);
+    text-decoration: underline;
+}
+
+/* ── Placeholder de Imagen Mejorado ── */
+.mis-reportes-imagen-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #94A3B8;
+    gap: 0.5rem;
+}
+
+.mis-reportes-icono-no-img {
+    width: 40px;
+    height: 40px;
+    opacity: 0.5;
+}
+
+/* ── Carga ── */
+.mis-reportes-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 119, 182, 0.2);
+    border-top-color: var(--color-oceano);
+    border-radius: 50%;
+    animation: spinner 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Vacío Interactivo ── */
+.mis-reportes-vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mis-reportes-vacio-icono-container {
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 119, 182, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.mis-reportes-vacio-icono {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.mis-reportes-btn-vacio {
+    margin-top: 1.5rem;
+    background-color: var(--color-oceano);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.mis-reportes-btn-vacio:hover {
+    background-color: #023e8a;
+    transform: translateY(-2px);
+}
+
+.mis-reportes-vacio-filtro {
+    padding: 3rem 1rem;
+}
+
+/* ── Floating Action Button (Móviles) ── */
+.mis-reportes-fab-movil {
+    display: none;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-ola);
+    color: white;
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(0, 168, 232, 0.4);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s;
+}
+
+.mis-reportes-fab-movil svg {
+    width: 28px;
+    height: 28px;
+}
+
+.mis-reportes-fab-movil:hover {
+    transform: scale(1.1) rotate(90deg);
+    background-color: var(--color-oceano);
+}
+
+@media (max-width: 767px) {
+    .mis-reportes-btn-desktop {
+        display: none;
+    }
+    .mis-reportes-fab-movil {
+        display: flex;
+    }
+}

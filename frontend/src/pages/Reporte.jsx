@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient'; // Conexión a Supabase
 import { saveReportOffline } from '../utils/offlineSync';
+import { toast } from 'react-hot-toast';
+import { translateError } from '../utils/errorTranslator';
 import './Reporte.css';
 
 export default function Reporte({ setVistaActual }) {
@@ -72,12 +74,19 @@ export default function Reporte({ setVistaActual }) {
 
   const manejarArchivo = (e) => {
     const archivo = e.target.files[0];
-    setFormulario((prev) => ({ ...prev, foto: archivo }));
+    if (archivo) {
+      if (archivo.size > 5 * 1024 * 1024) {
+        toast.error("La imagen es muy pesada. Máximo 5MB.");
+        e.target.value = null;
+        return;
+      }
+      setFormulario((prev) => ({ ...prev, foto: archivo }));
+    }
   };
 
   const capturarCoordenadas = () => {
     if (!navigator.geolocation) {
-      alert("La geolocalización no es soportada por tu navegador.");
+      toast.error("La geolocalización no es soportada por tu navegador.");
       return;
     }
     
@@ -96,13 +105,31 @@ export default function Reporte({ setVistaActual }) {
       },
       (error) => {
         console.error("Error al obtener ubicación: ", error);
-        alert("No se pudo obtener la ubicación automáticamente.");
+        toast.error("No se pudo obtener la ubicación automáticamente.");
         setCargando(false);
       }
     );
   };
 
-  const irSiguientePaso = () => setPasoActual((prev) => prev + 1);
+  const irSiguientePaso = () => {
+    if (pasoActual === 1) {
+      if (!formulario.latitud || !formulario.longitud) {
+        toast.error("Debes proporcionar las coordenadas GPS antes de continuar.");
+        return;
+      }
+    }
+    if (pasoActual === 2) {
+      if (formulario.descripcion.length < 10) {
+        toast.error("La descripción debe tener al menos 10 caracteres.");
+        return;
+      }
+      if (!formulario.foto) {
+        toast.error("Debes adjuntar obligatoriamente una foto como evidencia.");
+        return;
+      }
+    }
+    setPasoActual((prev) => prev + 1);
+  };
   const irPasoAnterior = () => setPasoActual((prev) => prev - 1);
 
   // NUEVA LÓGICA: Envío real a Supabase (Soporta Anónimos) y Offline Sync
@@ -120,7 +147,7 @@ export default function Reporte({ setVistaActual }) {
       // Evaluar estado de red
       if (!navigator.onLine) {
         await saveReportOffline(formulario, idUsuario);
-        alert("No tienes conexión a internet. El reporte se guardó de forma local y se enviará en cuanto te conectes.");
+        toast.success("El reporte se guardó de forma local y se enviará en cuanto te conectes.");
         window.dispatchEvent(new Event('offline-report-saved'));
         
         if (setVistaActual) setVistaActual('inicio');
@@ -190,7 +217,7 @@ export default function Reporte({ setVistaActual }) {
         if (errorActividad) throw errorActividad;
       }
 
-      alert("¡Reporte enviado exitosamente a la base de datos!");
+      toast.success("¡Reporte enviado exitosamente a la base de datos!");
 
       if (setVistaActual) setVistaActual('inicio');
       else navigate('/');
@@ -204,14 +231,14 @@ export default function Reporte({ setVistaActual }) {
           const { data: userData } = await supabase.auth.getUser();
           await saveReportOffline(formulario, userData?.user?.id || null);
           window.dispatchEvent(new Event('offline-report-saved'));
-          alert("Hubo un error de red al intentar subir el reporte. Se ha guardado localmente e intentaremos subirlo más tarde.");
+          toast.success("Error de red. El reporte se guardó localmente y se enviará más tarde.");
           if (setVistaActual) setVistaActual('inicio');
           else navigate('/');
         } catch(fallbackError) {
-          alert("Error crítico al enviar el reporte: " + error.message);
+          toast.error("Error crítico al enviar el reporte: " + error.message);
         }
       } else {
-        alert("Error al procesar el reporte: " + error.message);
+        toast.error(translateError(error.message));
       }
     } finally {
       setCargando(false);
@@ -409,7 +436,7 @@ export default function Reporte({ setVistaActual }) {
                   </div>
                   <div className="reporte-formulario-grupo">
                     <label className="reporte-etiqueta-input">Condición de la Especie</label>
-                    <select name="condicion" value={formulario.condicion} onChange={manejarCambio} className="reporte-select-estilizado">
+                    <select name="condicion" value={formulario.condicion} onChange={manejarCambio} className="reporte-select-estilizado" required>
                       <option value="">-- Seleccione condición --</option>
                       <option value="Sana/Avistamiento">Sana / Avistamiento normal</option>
                       <option value="Herida">Herida</option>
@@ -419,7 +446,7 @@ export default function Reporte({ setVistaActual }) {
                   </div>
                   <div className="reporte-formulario-grupo">
                     <label className="reporte-etiqueta-input">Tipo de Alerta</label>
-                    <select name="tipoAlerta" value={formulario.tipoAlerta} onChange={manejarCambio} className="reporte-select-estilizado">
+                    <select name="tipoAlerta" value={formulario.tipoAlerta} onChange={manejarCambio} className="reporte-select-estilizado" required>
                       <option value="">-- Seleccione alerta --</option>
                       <option value="Especie en Peligro">Especie en Peligro</option>
                       <option value="Especie Invasora">Especie Invasora</option>
@@ -432,7 +459,7 @@ export default function Reporte({ setVistaActual }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                   <div className="reporte-formulario-grupo">
                     <label className="reporte-etiqueta-input">Tipo de Material Principal</label>
-                    <select name="tipoMaterial" value={formulario.tipoMaterial} onChange={manejarCambio} className="reporte-select-estilizado">
+                    <select name="tipoMaterial" value={formulario.tipoMaterial} onChange={manejarCambio} className="reporte-select-estilizado" required>
                       <option value="">-- Seleccione material --</option>
                       <option value="Plástico">Plástico</option>
                       <option value="Vidrio">Vidrio</option>
@@ -443,7 +470,7 @@ export default function Reporte({ setVistaActual }) {
                   </div>
                   <div className="reporte-formulario-grupo">
                     <label className="reporte-etiqueta-input">Volumen Aproximado</label>
-                    <select name="volumenAproximado" value={formulario.volumenAproximado} onChange={manejarCambio} className="reporte-select-estilizado">
+                    <select name="volumenAproximado" value={formulario.volumenAproximado} onChange={manejarCambio} className="reporte-select-estilizado" required>
                       <option value="">-- Seleccione volumen --</option>
                       <option value="Bajo">Bajo (Equivalente a una bolsa)</option>
                       <option value="Medio">Medio (Acumulación local)</option>
@@ -461,7 +488,7 @@ export default function Reporte({ setVistaActual }) {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                   <div className="reporte-formulario-grupo">
                     <label className="reporte-etiqueta-input">Tipo de Actividad</label>
-                    <select name="tipoActividad" value={formulario.tipoActividad} onChange={manejarCambio} className="reporte-select-estilizado">
+                    <select name="tipoActividad" value={formulario.tipoActividad} onChange={manejarCambio} className="reporte-select-estilizado" required>
                       <option value="">-- Seleccione actividad --</option>
                       <option value="Construcción no autorizada">Construcción no autorizada</option>
                       <option value="Extracción ilegal de arena">Extracción ilegal de arena</option>
@@ -499,7 +526,7 @@ export default function Reporte({ setVistaActual }) {
               type="button"
               onClick={irSiguientePaso}
               className="reporte-btn reporte-btn-siguiente"
-              disabled={pasoActual === 1 && !formulario.categoria || cargando}
+              disabled={(pasoActual === 1 && !formulario.categoria) || (pasoActual === 2 && !formulario.foto) || cargando}
               style={{ marginLeft: pasoActual === 1 ? 'auto' : '0', width: pasoActual === 1 ? '100%' : 'auto' }}
             >
               Siguiente Paso
