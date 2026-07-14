@@ -91,24 +91,40 @@ export default function Reporte({ setVistaActual }) {
     }
     
     setCargando(true);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        setFormulario((prev) => ({
-          ...prev,
-          coordenadas: `Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}`,
-          latitud: lat.toFixed(6),
-          longitud: lng.toFixed(6)
-        }));
-        setCargando(false);
-      },
-      (error) => {
-        console.error("Error al obtener ubicación: ", error);
-        toast.error("No se pudo obtener la ubicación automáticamente.");
-        setCargando(false);
-      }
-    );
+
+    const onExito = (position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      setFormulario((prev) => ({
+        ...prev,
+        coordenadas: `Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}`,
+        latitud: lat.toFixed(6),
+        longitud: lng.toFixed(6)
+      }));
+      setCargando(false);
+      toast.success("Ubicación obtenida correctamente.");
+    };
+
+    const onError = (error) => {
+      console.warn("Fallo GPS alta precisión, intentando baja precisión...", error);
+      // Fallback a baja precisión (más rápido, usa WiFi/IP) si el GPS tarda demasiado
+      navigator.geolocation.getCurrentPosition(
+        onExito,
+        (errFallback) => {
+          console.error("Error definitivo al obtener ubicación: ", errFallback);
+          toast.error("No se pudo obtener la ubicación automáticamente. Verifica los permisos.");
+          setCargando(false);
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 }
+      );
+    };
+
+    // Intentar primero con alta precisión (GPS)
+    navigator.geolocation.getCurrentPosition(onExito, onError, {
+      enableHighAccuracy: true,
+      timeout: 6000, // Esperar máximo 6 segundos antes de pasar al plan B
+      maximumAge: 0
+    });
   };
 
   const irSiguientePaso = () => {

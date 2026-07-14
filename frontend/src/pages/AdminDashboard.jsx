@@ -771,17 +771,34 @@ export default function AdminDashboard() {
         return filtroEstadoMapa.includes(estadoReporte);
       })
       .forEach(rep => {
-        if (rep.latitud && rep.longitud) {
-          // Redondear un poco para agrupar coordenadas extremadamente cercanas
-          const key = `${Number(rep.latitud).toFixed(5)}_${Number(rep.longitud).toFixed(5)}`;
-          if (!agrupados[key]) {
-            agrupados[key] = {
-              latitud: rep.latitud,
-              longitud: rep.longitud,
-              reportes: []
-            };
+        let lat = rep.latitud;
+        let lng = rep.longitud;
+        
+        // Si faltan lat/lng explícitos, intentar extraer de 'coordenadas'
+        if ((!lat || !lng) && rep.coordenadas) {
+          const match = rep.coordenadas.match(/Lat:\s*([-\d.]+),\s*Lng:\s*([-\d.]+)/);
+          if (match) {
+            lat = match[1];
+            lng = match[2];
           }
-          agrupados[key].reportes.push(rep);
+        }
+
+        if (lat && lng) {
+          lat = Number(lat);
+          lng = Number(lng);
+          
+          if (!isNaN(lat) && !isNaN(lng)) {
+            // Redondear un poco para agrupar coordenadas extremadamente cercanas
+            const key = `${lat.toFixed(5)}_${lng.toFixed(5)}`;
+            if (!agrupados[key]) {
+              agrupados[key] = {
+                latitud: lat,
+                longitud: lng,
+                reportes: []
+              };
+            }
+            agrupados[key].reportes.push(rep);
+          }
         }
       });
     return Object.values(agrupados);
@@ -910,7 +927,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                <MapContainer center={[10.985, -64.120]} zoom={11} minZoom={10} maxZoom={18} maxBounds={[[10.75, -64.55], [11.25, -63.70]]} maxBoundsViscosity={1.0} style={{ height: '100%', width: '100%', zIndex: 0 }}>
+                <MapContainer center={[10.985, -64.120]} zoom={11} minZoom={3} maxZoom={18} style={{ height: '100%', width: '100%', zIndex: 0 }}>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; OpenStreetMap' />
                   {reportesAgrupadosMapa.map((grupo, index) => (
                     <Marker key={index} position={[grupo.latitud, grupo.longitud]} icon={crearIconoMarcador(grupo.reportes)}>
